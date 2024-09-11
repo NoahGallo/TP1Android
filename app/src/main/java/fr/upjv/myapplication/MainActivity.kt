@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import fr.upjv.myapplication.ui.theme.MyApplicationTheme
-import navigation.HomeNavHost
+import fr.upjv.myapplication.navigation.HomeNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

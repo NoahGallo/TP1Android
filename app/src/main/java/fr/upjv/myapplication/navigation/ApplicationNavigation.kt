@@ -1,4 +1,4 @@
-package navigation
+package fr.upjv.myapplication.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
@@ -7,8 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import screen.ListScreen
-import screen.MainScreen
+import fr.upjv.myapplication.screen.ListScreen
+import fr.upjv.myapplication.screen.MainScreen
 
 object NavigationPath {
     const val MAIN_SCREEN = "main_screen"

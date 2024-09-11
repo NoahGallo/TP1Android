@@ -1,5 +1,6 @@
-package screen
+package fr.upjv.myapplication.screen
 
+import AndroidVersionViewModel
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,10 +20,11 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import model.ItemUi
+import fr.upjv.myapplication.model.ItemUi
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,54 +32,47 @@ import model.ItemUi
 fun ListScreen(
     navController: NavController,
 ) {
+    val viewModel: AndroidVersionViewModel = viewModel()
+    val listOfResult = viewModel.androidVersionList.collectAsState(initial = emptyList()).value
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Car List", color = Color.White) }, // Set title color to white
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF4F4F4F)), // Nardo grey app bar
+                title = { Text("List Screen") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
+                            contentDescription = "Back"
                         )
                     }
                 }
             )
         },
+        bottomBar = {
+            Row {
+                Button(
+                    modifier = Modifier.weight(1f),
+                    onClick = { viewModel.insertAndroidVersion() }
+                ) {
+                    Text("Add")
+                }
+                Button(
+                    modifier = Modifier.weight(1f),
+                    onClick = { viewModel.deleteAllAndroidVersion() }
+                ) {
+                    Text("Delete")
+                }
+            }
+        },
         modifier = Modifier.fillMaxSize() // Ensures the scaffold takes full screen size
     ) { innerPadding ->
-        MyScreen(innerPadding) // Pass innerPadding to MyScreen
+        MyScreen(innerPadding, listOfResult, viewModel) // Pass innerPadding and list to MyScreen
     }
 }
 
-private fun populateMyList(): List<ItemUi.MyCarObject> {
-    return listOf(
-        ItemUi.MyCarObject(brandName = "Audi", modelName = "RS3", power = "400 HP"),
-        ItemUi.MyCarObject(brandName = "Audi", modelName = "RS6", power = "591 HP"),
-        ItemUi.MyCarObject(brandName = "BMW", modelName = "M4", power = "503 HP"),
-        ItemUi.MyCarObject(brandName = "BMW", modelName = "M3", power = "473 HP"),
-        ItemUi.MyCarObject(brandName = "Mercedes", modelName = "C63 AMG", power = "503 HP"),
-        ItemUi.MyCarObject(brandName = "Mercedes", modelName = "E63 AMG", power = "603 HP"),
-        ItemUi.MyCarObject(brandName = "Porsche", modelName = "911 Turbo S", power = "640 HP"),
-        ItemUi.MyCarObject(brandName = "Porsche", modelName = "718 Cayman GT4", power = "414 HP"),
-        ItemUi.MyCarObject(brandName = "Nissan", modelName = "GT-R", power = "565 HP"),
-        ItemUi.MyCarObject(brandName = "Ford", modelName = "Mustang Shelby GT500", power = "760 HP"),
-        ItemUi.MyCarObject(brandName = "Chevrolet", modelName = "Camaro ZL1", power = "650 HP"),
-        ItemUi.MyCarObject(brandName = "Lamborghini", modelName = "Huracán", power = "631 HP"),
-        ItemUi.MyCarObject(brandName = "Ferrari", modelName = "488 Pista", power = "710 HP"),
-        ItemUi.MyCarObject(brandName = "McLaren", modelName = "720S", power = "710 HP"),
-        ItemUi.MyCarObject(brandName = "Aston Martin", modelName = "Vantage", power = "503 HP"),
-        ItemUi.MyCarObject(brandName = "Dodge", modelName = "Charger SRT Hellcat", power = "707 HP"),
-        ItemUi.MyCarObject(brandName = "Hyundai", modelName = "i30 N", power = "276 HP"),
-        ItemUi.MyCarObject(brandName = "Hyundai", modelName = "Kona N", power = "276 HP"),
-        ItemUi.MyCarObject(brandName = "Hyundai", modelName = "i20 N", power = "204 HP")
-    )
-}
-
 @Composable
-private fun MyScreen(innerPadding: PaddingValues) {
+private fun MyScreen(innerPadding: PaddingValues, listOfResult: List<ItemUi>, viewModel: AndroidVersionViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -135,18 +131,7 @@ private fun MyScreen(innerPadding: PaddingValues) {
                 )
             }
 
-            // Updated LazyColumn
-            val listOfResult: MutableList<ItemUi> = mutableListOf()
-
-            populateMyList()
-                .groupBy { car -> car.brandName }
-                .forEach {
-                    listOfResult.add(
-                        ItemUi.Header(title = it.key)
-                    )
-                    listOfResult.addAll(it.value)
-                }
-
+            // Display the car list from the ViewModel
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth() // Fills width, no extra space
@@ -162,7 +147,7 @@ private fun MyScreen(innerPadding: PaddingValues) {
                             color = Color(0xFFD1D1D1) // Light grey text for headers
                         )
 
-                        is ItemUi.MyCarObject -> Column(
+                        is ItemUi.Item -> Column(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .border(2.dp, Color(0xFFD1D1D1), shape = RectangleShape) // Border for each car item

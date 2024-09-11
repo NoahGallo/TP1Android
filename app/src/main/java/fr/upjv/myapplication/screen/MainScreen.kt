@@ -1,4 +1,4 @@
-package screen
+package fr.upjv.myapplication.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
