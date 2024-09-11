@@ -25,7 +25,7 @@ fun QuoteScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         items(list) { item ->
-            Text(text = "Name = ${item.quote}")
+            Text(text = "Quote: ${item.quote}")
         }
         item {
             Button(
