@@ -1,4 +1,4 @@
-package fr.upjv.myapplication.data
+package fr.upjv.myapplication.data.Repository
 
 import fr.upjv.myapplication.architecture.CustomApplication
 import fr.upjv.myapplication.data.model.MyCarObject

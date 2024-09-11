@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MainScreen(
     onButtonClick: () -> Unit,
+    onButton2Click: () -> Unit,
 ) {
     Surface(
         modifier = Modifier
@@ -41,6 +42,13 @@ fun MainScreen(
                     color = Color(0xFF4F4F4F) // Nardo Grey text
                 )
             }
+            Button(
+                content = {
+                    Text("go to quote screen")
+                },
+                onClick = { onButton2Click() }
+            )
+
         }
     }
 }

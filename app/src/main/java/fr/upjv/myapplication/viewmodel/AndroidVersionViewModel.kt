@@ -1,10 +1,9 @@
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import fr.upjv.myapplication.data.AndroidVersionRepository
+import fr.upjv.myapplication.data.Repository.AndroidVersionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import fr.upjv.myapplication.model.ItemUi
-import fr.upjv.myapplication.model.toUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.random.Random
