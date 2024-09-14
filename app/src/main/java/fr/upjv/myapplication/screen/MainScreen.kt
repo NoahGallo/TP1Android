@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 fun MainScreen(
     onButtonClick: () -> Unit,
     onButton2Click: () -> Unit,
+    onButton3Click: () -> Unit // New parameter for the Cat Fact button
 ) {
     Surface(
         modifier = Modifier
@@ -42,13 +43,30 @@ fun MainScreen(
                     color = Color(0xFF4F4F4F) // Nardo Grey text
                 )
             }
-            Button(
-                content = {
-                    Text("go to quote screen")
-                },
-                onClick = { onButton2Click() }
-            )
 
+            Spacer(modifier = Modifier.height(8.dp)) // Space between buttons
+
+            Button(
+                onClick = { onButton2Click() },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White) // White button
+            ) {
+                Text(
+                    text = "Go to Quote Screen",
+                    color = Color(0xFF4F4F4F) // Nardo Grey text
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp)) // Space between buttons
+
+            Button(
+                onClick = { onButton3Click() }, // New button for Cat Fact screen
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White) // White button
+            ) {
+                Text(
+                    text = "Go to Cat Fact Screen",
+                    color = Color(0xFF4F4F4F) // Nardo Grey text
+                )
+            }
         }
     }
 }
