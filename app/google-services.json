@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "311100347755",
+    "project_id": "coursandroid-4b52a",
+    "storage_bucket": "coursandroid-4b52a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311100347755:android:78dd3e23bded752c41e82e",
+        "android_client_info": {
+          "package_name": "fr.upjv.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3nXN_ORUiiFGmVSrv6xsMp2GrsJ7MVP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
